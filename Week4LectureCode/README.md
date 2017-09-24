@@ -1,7 +1,7 @@
- CPS353 Week 4 LCode from Lecture
+CPS353 Week 4 Code from Lecture
 
 ========================
-TGis fodler contains the code created during lecture 4.
+This folder contains the code created during lecture 4.
 
 
 Getting Started
