@@ -1,0 +1,15 @@
+﻿<div class="well hoverwell thumbnail">
+    test
+    <h2>{{website?.name}}</h2>
+    <div>Created Date: {{website?.createdDate}}</div>
+    <div>Time: {{website?.createdTime}}</div>
+    <div>Description: {{website?.description}}</div>
+    <div>Fee: ${{website?.membershipFee}}</div>
+    <div>
+        <span>{{website?.ownerAddress.address}}</span>
+        <span>&nbsp;</span>
+        <span>{{website?.ownerAddress.city}}</span>, <span>{{website?.ownerAddress.country}}</span>
+    </div>
+
+    <button class="btn btn-primary" (click)="handleMyClick()">Click me!</button>
+</div>
