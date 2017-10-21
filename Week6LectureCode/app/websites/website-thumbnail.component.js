@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var WebsiteThumbnailComponent = (function () {
     function WebsiteThumbnailComponent() {
@@ -54,8 +55,7 @@ WebsiteThumbnailComponent = __decorate([
         //templateUrl: 'app/websites/website-thumbnail.component.html'
         template: "\n<div [routerLink]=\"['/websites',website?.id]\" class=\"well hoverwell thumbnail\">\n    <h2>{{website?.name}}</h2>\n    <div>Created Date: {{website?.createdDate}}</div>\n    <div [ngStyle]=\"getEarlyTimeStyle() \" [ngSwitch]=\"website?.createdTime\">\n        Created Time: {{website?.createdTime}}\n        <span *ngSwitchCase=\"'8:00 am'\">(Early start)</span>\n        <span *ngSwitchCase=\"'10:00 am'\">(Late start)</span>\n        <span *ngSwitchDefault>(Normal start)</span>\n    </div>\n\n    <div>Description: {{website?.description}}</div>\n    <div>Fee: ${{ website?.membershipFee }}</div>\n    <div [hidden]=\"!website?.ownerAddress\">\n        <span>{{website?.ownerAddress?.address}}</span>\n        <span>&nbsp;</span>\n        <span>{{website?.ownerAddress?.city}}</span>, <span>{{website?.ownerAddress?.country}}</span>\n    </div>\n    <div [hidden]=\"!website?.onlineUrl\">Online Url: {{website?.onlineUrl}}</div>\n    </div>\n",
         styles: ["\n        .green{color:#003300}\n        .bold{font-weight:bold}\n        .thumbnail {min-height:330px;}\n\t    .pad-left {margin-left:10px;}\n\t    .well div {color:#bbb;}\n        "]
-    }),
-    __metadata("design:paramtypes", [])
+    })
 ], WebsiteThumbnailComponent);
 exports.WebsiteThumbnailComponent = WebsiteThumbnailComponent;
 //# sourceMappingURL=website-thumbnail.component.js.map
