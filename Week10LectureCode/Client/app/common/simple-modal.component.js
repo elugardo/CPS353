@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var SimpleModalComponent = (function () {
     function SimpleModalComponent() {
@@ -27,8 +28,7 @@ SimpleModalComponent = __decorate([
         selector: "simple-modal",
         template: "\n\t\t<div id=\"{{elementId}}\" class=\"modal fade\" tabindex=\"-1\">\n\t\t\t<div class=\"modal-dialog\">\n\t\t\t\t<div class=\"modal-content\">\n\t\t\t\t\t<div class=\"modal-header\">\n\t\t\t\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span>&times;</span></button>\n\t\t\t\t\t\t<h4 class=\"modal-title\">{{title}}</h4>\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"modal-body\">\n\t\t\t\t\t\t<ng-content></ng-content>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t\n\t",
         styles: ["\n\t\t.modal-body{height:250px; overflow-y:scroll;}\n\t"]
-    }),
-    __metadata("design:paramtypes", [])
+    })
 ], SimpleModalComponent);
 exports.SimpleModalComponent = SimpleModalComponent;
 //# sourceMappingURL=simple-modal.component.js.map

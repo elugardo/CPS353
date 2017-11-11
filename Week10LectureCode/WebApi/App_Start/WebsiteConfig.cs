@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -374,17 +376,79 @@ namespace WebApi.App_Start
             };
             foreach (var site in websites)
             {
-                site.Description = UpdateDescription(site.Name == "Blogger" ? "Blogger_(service)" : site.Name);
+                var name = site.Name == "Blogger" ? "Blogger_(service)" : site.Name;
+                site.Description = UpdateDescription(name);
+                site.CreatedDate = UpdateDate(name);
             }
             return websites;
+        }
+
+        /// <summary>
+        /// Requests date from Wikipedia
+        /// </summary>
+        /// <param name="siteName"></param>
+        /// <returns></returns>
+        public static DateTime UpdateDate(string siteName)
+        {
+
+            var url = ConfigurationManager.AppSettings["WikipediaPageContentUrl"] + siteName;
+            
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
+            webRequest.Method = "GET";
+            webRequest.ContentType = "application/json";
+            webRequest.Accept = "application/json";
+
+            string responseString = "";
+            using (HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse())
+            {
+                using (StreamReader responseStream = new StreamReader(webResponse.GetResponseStream()))
+                {
+                    responseString = responseStream.ReadToEnd();
+                }
+
+            }
+            var createdDate = ParseDate(responseString);
+            return createdDate;
+
+        }
+
+        public static DateTime ParseDate(string inputString)
+        {
+            var createdDate = DateTime.Now;
+            Regex regex = new Regex(
+            "(?:founded|launch\\sdate|foundation)\\s+=\\s\\{\\{.*?\\|(\\d" +
+            "{4})\\|(\\d{2}|\\d{1})\\|?(\\d{2}|\\d{1})?",
+            RegexOptions.IgnoreCase
+            | RegexOptions.CultureInvariant
+            | RegexOptions.Compiled
+            );
+            if (regex.IsMatch(inputString))
+            {
+                var ms = regex.Matches(inputString);
+                var groups = ms[0];
+
+                int year = Convert.ToInt32(groups.Groups[1].Value);
+                int month = Convert.ToInt32(groups.Groups[2].Value);
+
+                if (groups.Groups.Count == 4)
+                {
+                    int day = Convert.ToInt32(groups.Groups[3].Value);
+                    createdDate = new DateTime(year, month, day);
+                }
+                else
+                {
+                    createdDate = new DateTime(year, month, 1);
+                }
+            }
+            
+            return createdDate;
         }
 
         public static string UpdateDescription(string siteName)
         {
             string description = "";
-            var url =
-                $"https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&exsentences=4&titles={siteName}";
-
+            var url = ConfigurationManager.AppSettings["WikipediaExtractUrl"] + siteName;
+            
             HttpWebRequest webRequest = (HttpWebRequest) WebRequest.Create(url);
             webRequest.Method = "GET";
             webRequest.ContentType = "application/json";
@@ -405,7 +469,10 @@ namespace WebApi.App_Start
 
         public static WikipediaPageExtract ParseResponse(string responseString)
         {
+            //dynamic responseJson = JsonConvert.DeserializeObject(responseString);
+
             var responseJson = JsonConvert.DeserializeObject<RootObject>(responseString);
+
             var firstKey = responseJson.query.pages.First().Key;
           
             var response = new WikipediaPageExtract

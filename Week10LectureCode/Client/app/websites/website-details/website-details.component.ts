@@ -18,8 +18,9 @@ export class WebsiteDetailsComponent implements OnInit {
 
     ngOnInit() {
         this.router.params.forEach((params: Params) => {
-            this.website = this.websiteService.getWebsite(+params['id'])
+            this.websiteService.getWebsite(+params['id']).subscribe((website: IWebsite) => {
+                this.website = website
+            })
         })
-        //this.website = this.websiteService.getWebsite(+this.router.snapshot.params['id'])
     }
 }

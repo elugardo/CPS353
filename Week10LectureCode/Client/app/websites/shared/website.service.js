@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var RX_1 = require("rxjs/RX");
 var http_1 = require("@angular/http");
@@ -23,7 +24,9 @@ var WebsiteService = (function () {
         }).catch(this.handleError);
     };
     WebsiteService.prototype.getWebsite = function (id) {
-        return WEBSITES.find(function (website) { return website.id === id; });
+        return this.http.get("http://localhost:65058/api/websites/" + id).map(function (response) {
+            return response.json();
+        }).catch(this.handleError);
     };
     WebsiteService.prototype.searchEmployees = function (searchTerm) {
         var term = searchTerm.toLowerCase();

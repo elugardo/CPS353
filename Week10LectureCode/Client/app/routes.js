@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var websites_list_component_1 = require("./websites/websites-list.component");
 var website_details_component_1 = require("./websites/website-details/website-details.component");
 var create_website_component_1 = require("./websites/create-website.component");

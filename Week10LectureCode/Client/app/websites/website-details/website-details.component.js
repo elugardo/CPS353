@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var website_service_1 = require("../shared/website.service");
 var router_1 = require("@angular/router");
@@ -19,7 +20,9 @@ var WebsiteDetailsComponent = (function () {
     WebsiteDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.router.params.forEach(function (params) {
-            _this.website = _this.websiteService.getWebsite(+params['id']);
+            _this.websiteService.getWebsite(+params['id']).subscribe(function (website) {
+                _this.website = website;
+            });
         });
         //this.website = this.websiteService.getWebsite(+this.router.snapshot.params['id'])
     };

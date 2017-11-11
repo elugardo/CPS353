@@ -46,3 +46,4 @@ C:\Workspace\ClassRepo\Week10LectureCode\WebApi\bin\System.Web.WebPages.Razor.xm
 C:\Workspace\ClassRepo\Week10LectureCode\WebApi\bin\Antlr3.Runtime.pdb
 C:\Workspace\ClassRepo\Week10LectureCode\WebApi\obj\Debug\WebApi.dll
 C:\Workspace\ClassRepo\Week10LectureCode\WebApi\obj\Debug\WebApi.pdb
+C:\Workspace\ClassRepo\Week10LectureCode\WebApi\obj\Debug\WebApi.csprojResolveAssemblyReference.cache

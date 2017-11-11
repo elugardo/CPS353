@@ -13,14 +13,16 @@ export class WebsiteService
         //return this.http.get("/api/websites") //observable of Response
 
         //instead map it 
-        return this.http.get("http://localhost:65058/api/websites").map((response: Response) => {
+        return this.http.get("http://localhost:60938/api/websites").map((response: Response) => {
             return <IWebsite[]>response.json();
         }).catch(this.handleError)
     }
 
 
-    getWebsite(id: number): IWebsite {
-        return WEBSITES.find(website => website.id === id)
+    getWebsite(id: number): Observable<IWebsite> {
+        return this.http.get("http://localhost:60938/api/websites/" + id).map((response: Response) => {
+            return <IWebsite>response.json();
+        }).catch(this.handleError)
     }
 
     searchEmployees(searchTerm: string) {

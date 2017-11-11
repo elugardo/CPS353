@@ -6,46 +6,51 @@ using System.Net.Http;
 using System.Web.Http;
 using WebApi.Models;
 using WebApi.Repositories;
+using WebApi.Services;
 
 namespace WebApi.Controllers
 {
     public class WebsitesController : ApiController
     {
-        private WebsiteRepository _websiteRepository;
+        private WebsiteService _websiteService;
 
         public WebsitesController()
         {
-            
-            _websiteRepository = new WebsiteRepository();
+            _websiteService = new WebsiteService();
         }
         // GET: api/Websites
         public IEnumerable<Website> Get()
         {
-            return _websiteRepository.Get();
+            return _websiteService.Get();
+        }
+
+        public IEnumerable<Website> GetByName(string name)
+        {
+            return _websiteService.Get().Where(s => s.Name.ToLower() == name.ToLower());
         }
 
         // GET: api/Websites/5
         public Website Get(int id)
         {
-            return _websiteRepository.Get(id);
+            return _websiteService.Get(id);
         }
 
         // POST: api/Websites
         public void Post([FromBody]Website website)
         {
-            _websiteRepository.Add(website);
+            _websiteService.Add(website);
         }
 
         // PUT: api/Websites/5
         public void Put(int id, [FromBody]Website website)
         {
-            _websiteRepository.Update(website);
+            _websiteService.Update(id,website);
         }
 
         // DELETE: api/Websites/5
         public void Delete(int id)
         {
-            _websiteRepository.Remove(id);
+            _websiteService.Delete(id);
         }
     }
 }
