@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WebsitesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Addresses">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="200" />
+          <Property Name="City" Type="varchar" MaxLength="100" />
+          <Property Name="Country" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Websites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="MembershipFee" Type="money" />
+          <Property Name="ImageUrl" Type="varchar" MaxLength="256" />
+          <Property Name="OnlineUrl" Type="varchar" MaxLength="256" />
+          <Property Name="OwnerAddressId" Type="int" />
+        </EntityType>
+        <Association Name="FK_Websites_Addresses">
+          <End Role="Addresses" Type="Self.Addresses" Multiplicity="0..1" />
+          <End Role="Websites" Type="Self.Websites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Addresses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Websites">
+              <PropertyRef Name="OwnerAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WebsitesModelStoreContainer">
+          <EntitySet Name="Addresses" EntityType="Self.Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Websites" EntityType="Self.Websites" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Websites_Addresses" Association="Self.FK_Websites_Addresses">
+            <End Role="Addresses" EntitySet="Addresses" />
+            <End Role="Websites" EntitySet="Websites" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WebsitesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WebsitesEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Addresses" EntityType="WebsitesModel.Address" />
+          <EntitySet Name="Websites" EntityType="WebsitesModel.Website" />
+          <AssociationSet Name="FK_Websites_Addresses" Association="WebsitesModel.FK_Websites_Addresses">
+            <End Role="Address" EntitySet="Addresses" />
+            <End Role="Website" EntitySet="Websites" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Websites" Relationship="WebsitesModel.FK_Websites_Addresses" FromRole="Address" ToRole="Website" />
+        </EntityType>
+        <EntityType Name="Website">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="MembershipFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ImageUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="OnlineUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="OwnerAddressId" Type="Int32" />
+          <NavigationProperty Name="Address" Relationship="WebsitesModel.FK_Websites_Addresses" FromRole="Website" ToRole="Address" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Websites_Addresses">
+          <End Type="WebsitesModel.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="WebsitesModel.Website" Role="Website" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Address">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Website">
+              <PropertyRef Name="OwnerAddressId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WebsitesModelStoreContainer" CdmEntityContainer="WebsitesEntities" >
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="WebsitesModel.Address">
+              <MappingFragment StoreEntitySet="Addresses">
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address1" ColumnName="Address" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Websites">
+            <EntityTypeMapping TypeName="WebsitesModel.Website">
+              <MappingFragment StoreEntitySet="Websites">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="OwnerAddressId" ColumnName="OwnerAddressId" />
+                <ScalarProperty Name="OnlineUrl" ColumnName="OnlineUrl" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="MembershipFee" ColumnName="MembershipFee" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
